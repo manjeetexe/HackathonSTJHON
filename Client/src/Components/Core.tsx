@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Loader = () => {
   return (
     <StyledWrapper>
-      <div className="svg-frame ">
+      <div className="svg-frame relative">
       <svg width="900" height="900" viewBox="0 0 344 344">
         <g id="out1">
           <path d="M72 172C72 116.772 116.772 72 172 72C227.228 72 272 116.772 272 172C272 227.228 227.228 272 172 272C116.772 272 72 227.228 72 172ZM197.322 172C197.322 158.015 185.985 146.678 172 146.678C158.015 146.678 146.678 158.015 146.678 172C146.678 185.985 158.015 197.322 172 197.322C185.985 197.322 197.322 185.985 197.322 172Z" />
@@ -55,8 +55,8 @@ const StyledWrapper = styled.div`
 
   .svg-frame {
     position: relative;
-    width: 700px; /* Increased from 300px */
-    height: 700px; /* Increased from 300px */
+    width: 600px; /* Increased from 300px */
+    height: 600px; /* Increased from 300px */
     transform-style: preserve-3d;
     display: flex;
     justify-content: center;
