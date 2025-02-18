@@ -10,5 +10,191 @@
   }
 }
 
+.grid-container {
+  position: relative;
+  overflow: hidden;
+}
 
+.grid-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px; /* Adjust grid size */
+  pointer-events: none;
+}
+
+
+/* From Uiverse.io by Valeron-T */ 
+.loader {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: #212121;
+  border-radius: 50%;
+  box-shadow: inset 0px 0px 7px #02fdff;
+  border: 1px solid #02fdff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: 34px;
+  background: transparent;
+  border: 1px solid #02fdff;
+  border-radius: 50%;
+  box-shadow: inset 0px 0px 5px #02fdff;
+}
+
+.loader::after {
+  content: "";
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: 1px solid #02fdff;
+  box-shadow: inset 0px 0px 3px #02fdff;
+}
+
+.loader span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  transform-origin: top left;
+  animation: radar81 2s linear infinite;
+  box-shadow: -25px -75px 30px -50px #02fdff;
+  border-top: 2px solid #02fdff;
+}
+
+.loader span::before {
+  display: none;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15%;
+  height: 100%;
+  background: #02fdff;
+  transform-origin: top left;
+  transform: rotate(-90deg);
+  filter: blur(15px) drop-shadow(10px 0px 10px #02fdff);
+}
+
+@keyframes radar81 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#dot-1 {
+  --dot-start-top: 100px;
+  --dot-start-left: 140px;
+  --dot-end-top: 130px;
+  --dot-end-left: 20px;
+  --delay: 0s;
+}
+
+#dot-2 {
+  --dot-start-top: 100px;
+  --dot-start-left: 0px;
+  --dot-end-top: -3px;
+  --dot-end-left: 90px;
+  --delay: 0s;
+}
+
+#dot-3 {
+  --dot-start-top: 100px;
+  --dot-start-left: 105px;
+  --dot-end-top: 18px;
+  --dot-end-left: 18px;
+  --delay: 0s;
+}
+
+#dot-4 {
+  --dot-start-top: 110px;
+  --dot-start-left: 150px;
+  --dot-end-top: 140px;
+  --dot-end-left: 30px;
+  --delay: 0s;
+}
+
+#dot-5 {
+  --dot-start-top: -5px;
+  --dot-start-left: 85px;
+  --dot-end-top: 125px;
+  --dot-end-left: 120px;
+  --delay: 4s;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  top: var(--dot-start-top);
+  left: var(--dot-start-left);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255);
+  box-shadow: inset 0px 0px 10px 2px #02fdff,
+    0px 0px 10px 2px #02fdff;
+  -webkit-animation: fly 32s linear infinite;
+  animation-delay: var(--delay);
+  -moz-animation: fly 32s linear infinite;
+}
+
+@keyframes fly {
+  0% {
+    top: var(--dot-start-top);
+    left: var(--dot-start-left);
+  }
+
+  100% {
+    top: var(--dot-end-top);
+    left: var(--dot-end-left);
+  }
+
+  10%,
+  15%,
+  25%,
+  35%,
+  45%,
+  55%,
+  65%,
+  75%,
+  85%,
+  95% {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: inset 0 0 10px 2px #02fdff,
+      0 0 15px 2px #02fdff;
+  }
+
+  0%,
+  10%,
+  20%,
+  30%,
+  40%,
+  50%,
+  60%,
+  70%,
+  80%,
+  90% {
+    background: #02fdff;
+    box-shadow: inset 0 0 10px 2px #02fdff,
+      0 0 5px 2px #02fdff;
+  }
+}
 
