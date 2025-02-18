@@ -1,9 +1,13 @@
 import React from 'react'
 import Core from './Components/Core'
 import ChatBox from './Components/ChatBox'
-import { motion } from "framer-motion";
+import Box1 from './Components/Box1'
 
 const App = () => {
+
+  
+
+
   return (
     <>
     <div className="h-screen w-screen bg-black  px-20 ">
@@ -13,52 +17,11 @@ const App = () => {
       
       <div className='flex justify-center gap-5 h-screen flex-col'>
       
-          <div className='bg-gray-900 rounded-md p-3 flex flex-col gap-4  w-80'>
-            <div className='flex  gap-3'>
-            <div className="h-30 flex items-center justify-center w-[65%] border border-[#02fdff] rounded-sm bg-gray-900 relative grid-container">
-            <div className="loader">
-              <span></span>
+          
 
-              <div id="dot-1" className="dot"></div>
-              <div id="dot-2" className="dot"></div>
-              <div id="dot-3" className="dot"></div>
-              <div id="dot-4" className="dot"></div>
-              <div id="dot-5" className="dot"></div>
-            </div>
+        <Box1 />
 
-            </div>
-              <div className='h-30 w-[35%] p-2 bg-[#024a4a]'>
-                  <div className='border text-[#02fdff] flex w-full justify-center  items-center border-[#02fdff] h-6'>CPU</div>
-                  <div className='flex flex-col justify-center mt-2 items-center gap-1'>
-                    <div className='flex text-sm text-[#fffb00] gap-3'>
-                      <h1>TEMP</h1>
-                      <h1>32°C</h1>
-                    </div>
-                    <div className='text-[#02fdff] text-sm flex gap-3'>
-                      <h1>RAM</h1>
-                      <h1>516GB</h1>
-                    </div>
-                    <div className='text-[#02fdff] text-sm flex gap-3'>
-                      <h1>ROM</h1>
-                      <h1>16GB</h1>
-                    </div>
-                  </div>
-              </div>
-            </div>
-
-            
-              <div className="w-full bg-cyan-900 rounded h-10 relative overflow-hidden">
-                <motion.div
-                  className="h-10 bg-[#02fdff] rounded-sm shadow-[#02fdff]/50"
-                  initial={{ width: "0%" }}
-                  animate={{ width: "90%" }}
-                  transition={{ duration: 3, repeat: Infinity, repeatType: "mirror" }}
-                />
-                
-              </div>
-           
-            
-          </div>
+          
         
         
           <div className='bg-gray-900 rounded-md p-3 flex flex-col gap-2  h-60 w-80'>
