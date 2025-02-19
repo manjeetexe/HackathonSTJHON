@@ -56,9 +56,9 @@ const App = () => {
         
         <div className='flex gap-5 absolute bottom-20 z-10 left-[40%]'>
         
-        <Button  />
+        <Button Button='Study'  />
         
-        <Button />
+        <Button Button='History'/>
 
         </div>
         <Core />

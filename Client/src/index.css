@@ -202,7 +202,7 @@
 /* From Uiverse.io by kleenpulse */ 
 .btn {
   --border-color: linear-gradient(-45deg, #085150, #00fffb, #00fffb);
-  --border-width: 0.125em;
+  --border-width: 0.135em;
   --curve-size: 0.5em;
   --blur: 30px;
   --bg: #080312;
