@@ -2,6 +2,8 @@ import React from 'react'
 import Core from './Components/Core'
 import ChatBox from './Components/ChatBox'
 import Box1 from './Components/Box1'
+import HackerTerminal from './Components/Hackingterminal'
+import AudioVisualizer from './Components/Audioanlize'
 
 const App = () => {
 
@@ -10,7 +12,7 @@ const App = () => {
 
   return (
     <>
-    <div className="h-screen w-screen bg-black  px-20 ">
+    <div className="h-screen w-screen bg-black  px-10 ">
     
       <div className="flex h-full w-full justify-between relative items-center">
       <div className='absolute bg-[#02fdff] h-100 w-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 blur-[500px]'></div>
@@ -38,18 +40,7 @@ const App = () => {
           </div>
        
         
-          <div className='bg-gray-900 rounded-md p-3 flex flex-col gap-2  h-60 w-80'>
-            <div className='flex  gap-3'>
-            <div className="h-20 w-[65%] border border-[#02fdff] rounded-sm bg-gray-900 relative grid-container">
-            </div>
-              <div className='h-20 w-[35%] bg-[#024a4a]'></div>
-            </div>
-            <div className='bg-[#02fdff] w-full h-10'></div>
-            <div className='flex gap-3'>
-            <div className='h-20 w-[40%] bg-[#024a4a]'></div>
-              <div className='bg-black w-[60%] h-20'></div>
-            </div>
-          </div>
+          <HackerTerminal />
        
         </div>
         <div className='absolute  top-[34vh] z-10 -left-17'>
@@ -100,18 +91,11 @@ const App = () => {
         
 
         <div className='className="flex flex-col  justify-center items-center '>
-        <div className='bg-gray-900 rounded-md p-3 flex flex-col gap-2 mb-5  h-60 w-80'>
-            <div className='flex  gap-3'>
-            <div className="h-20 w-[65%] border border-[#02fdff] rounded-sm bg-gray-900 relative grid-container">
-            </div>
-              <div className='h-20 w-[35%] bg-[#024a4a]'></div>
-            </div>
-            <div className='bg-[#02fdff] w-full h-10'></div>
-            <div className='flex gap-3'>
-            <div className='h-20 w-[40%] bg-[#024a4a]'></div>
-              <div className='bg-black w-[60%] h-20'></div>
-            </div>
+        
+          <div className='mb-4'>
+          <AudioVisualizer />
           </div>
+          
           <ChatBox />
         </div>
      
