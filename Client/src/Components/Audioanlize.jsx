@@ -35,7 +35,7 @@ const AudioVisualizer = () => {
 
         const barWidth = (canvas.width / bufferLength) * 2.5;
         let x = 0;
-        const barColor = "rgb(0, 255, 100)"; // Change this for different colors
+        const barColor = "rgb(2, 253, 255)"; // Change this for different colors
 
         for (let i = 0; i < bufferLength; i++) {
           const barHeight = dataArray[i];
@@ -58,7 +58,8 @@ const AudioVisualizer = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center bg-black p-4 h-60 w-80 border rounded-md border-[#02fdff]">
+    <div className="flex justify-center relative items-center bg-black p-4 h-60 w-80 border rounded-md border-[#02fdff]">
+        <p className="absolute top-4 text-[#02fdff] left-5">working</p>
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   );
