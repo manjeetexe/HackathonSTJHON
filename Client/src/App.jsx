@@ -4,6 +4,8 @@ import ChatBox from './Components/ChatBox'
 import Box1 from './Components/Box1'
 import HackerTerminal from './Components/Hackingterminal'
 import AudioVisualizer from './Components/Audioanlize'
+import SpeakerAudioAnalizer from './Components/SpeakerSoundAnalizer'
+import Button from './Components/Button'
 
 const App = () => {
 
@@ -26,17 +28,8 @@ const App = () => {
           
         
         
-          <div className='bg-gray-900 rounded-md p-3 flex flex-col gap-2  h-60 w-80'>
-            <div className='flex  gap-3'>
-            <div className="h-20 w-[65%] border border-[#02fdff] rounded-sm bg-gray-900 relative grid-container">
-            </div>
-              <div className='h-20 w-[35%] bg-[#024a4a]'></div>
-            </div>
-            <div className='bg-[#02fdff] w-full h-10'></div>
-            <div className='flex gap-3'>
-            <div className='h-20 w-[40%] bg-[#024a4a]'></div>
-              <div className='bg-black w-[60%] h-20'></div>
-            </div>
+          <div className=''>
+            <SpeakerAudioAnalizer />
           </div>
        
         
@@ -61,7 +54,13 @@ const App = () => {
           <h1 className=' absolute top-25 text-[#02fdff] hover:text-[#fffb00] left-126'>Instagram</h1>
         </div>
         
+        <div className='flex gap-5 absolute bottom-20 z-10 left-[40%]'>
         
+        <Button  />
+        
+        <Button />
+
+        </div>
         <Core />
 
         <div className='absolute   top-[34vh] z-10 right-247'>
