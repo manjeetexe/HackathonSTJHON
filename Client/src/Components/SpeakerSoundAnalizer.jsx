@@ -92,7 +92,7 @@ const AudioWaveVisualizer = () => {
   }, [file]);
 
   return (
-    <div className="flex flex-col overflow-hidden items-center justify-center w-80 h-60 bg-black border-2 border-[#02fdff] p-2 rounded-md shadow-lg neon-glow">
+    <div className="flex flex-col overflow-hidden items-center justify-center w-80 h-63 bg-black border-2 border-[#02fdff] p-2 rounded-md shadow-lg neon-glow">
       <label className="text-cyan-400 font-mono mb-2 cursor-pointer hover:text-cyan-300 transition">
         Upload Audio:
         <input

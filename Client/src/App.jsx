@@ -21,7 +21,25 @@ const App = () => {
       
       <div className='flex justify-center gap-5 h-screen flex-col'>
       
-          
+          <div className='absolute p-3 flex justify-between items-center h-30 w-150 left-95 border top-12 border-[#02fdff]'>
+              <div>
+              <div className='flex justify-center items-center gap-2'>
+                  <h1 className='text-4xl text-[#fffb00] font-bold'>25</h1>
+                  <div className='flex text-[11px] flex-col text-[#fffb00]'>
+                    <p>Febraury</p>
+                    <p>2025</p>
+                  </div>
+              </div>
+              <div className='text-[#02fdff]'>2:30:34 pm</div>
+              </div>
+              <div>
+                <h1 className='text-[#fffb00] absolute top-6 left-[31%] font-black text-7xl'>ZENOX</h1>
+              </div>
+              <div className='flex flex-col gap-2'>
+                <div className='bg-[#02fdff] px-3 font-medium rounded-sm'>Log in</div>
+                <div className='bg-[#02fdff] px-3 font-medium rounded-sm'>Sign up</div>
+              </div>
+          </div>
 
         <Box1 />
 
