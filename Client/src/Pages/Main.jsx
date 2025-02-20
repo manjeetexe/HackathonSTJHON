@@ -6,6 +6,7 @@ import HackerTerminal from './../Components/Hackingterminal'
 import AudioVisualizer from './../Components/Audioanlize'
 import SpeakerAudioAnalizer from './../Components/SpeakerSoundAnalizer'
 import Button from './../Components/Button'
+import { Link } from 'react-router-dom'
 
 const Main = () => {
 
@@ -74,7 +75,9 @@ const Main = () => {
         
         <div className='flex gap-5 absolute bottom-20 z-10 left-[40%]'>
         
-        <Button Button='Study'  />
+        <Link to='/Canvas'>
+          <Button Button='Black Board'  />
+        </Link>
         
         <Button Button='History'/>
 
