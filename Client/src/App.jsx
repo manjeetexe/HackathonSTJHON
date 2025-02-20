@@ -3,15 +3,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from './Pages/Main'
 import Canvas from './Pages/Canvas'
 
+
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/Canvas" element={<Canvas />} />
-        
-      </Routes>
-    </Router>
+    <>
+    
+        <Router>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/Canvas" element={<Canvas />} />
+            
+          </Routes>
+        </Router>
+    </>
   )
 }
 

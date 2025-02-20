@@ -7,6 +7,7 @@ import AudioVisualizer from './../Components/Audioanlize'
 import SpeakerAudioAnalizer from './../Components/SpeakerSoundAnalizer'
 import Button from './../Components/Button'
 import { Link } from 'react-router-dom'
+import Vocetotext from './../Components/VoicetoText'
 
 const Main = () => {
 
@@ -73,13 +74,16 @@ const Main = () => {
           <h1 className=' absolute top-25 text-[#02fdff] hover:text-[#fffb00] left-126'>Instagram</h1>
         </div>
         
-        <div className='flex gap-5 absolute bottom-20 z-10 left-[40%]'>
+        <div className='flex gap-5 absolute bottom-20 z-10 left-[30%]'>
+        
         
         <Link to='/Canvas'>
-          <Button Button='Black Board'  />
+          <Button Button='AI Black Board'  />
         </Link>
-        
-        <Button Button='History'/>
+
+        <Vocetotext />
+
+        <Button Button='Personal Agent'/>
 
         </div>
         <Core />
