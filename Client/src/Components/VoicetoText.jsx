@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import Button from "./Button";
 
-const AudioAnalyze = () => {
+const AudioAnalyze = ({ onVoiceInput }) => {
+  const [isListening, setIsListening] = useState(false);
+
   const startListening = () => {
     if (!("webkitSpeechRecognition" in window)) {
       console.error("Speech Recognition API is not supported in this browser.");
@@ -14,12 +16,14 @@ const AudioAnalyze = () => {
     recognition.lang = "en-US"; // Set language
 
     recognition.onstart = () => {
+      setIsListening(true);
       console.log("Listening...");
     };
 
     recognition.onresult = (event) => {
       const speechResult = event.results[0][0].transcript;
       console.log("Recognized Speech:", speechResult);
+      onVoiceInput(speechResult); // Send text to chatbox
     };
 
     recognition.onerror = (event) => {
@@ -27,6 +31,7 @@ const AudioAnalyze = () => {
     };
 
     recognition.onend = () => {
+      setIsListening(false);
       console.log("Stopped listening.");
     };
 
@@ -35,9 +40,8 @@ const AudioAnalyze = () => {
 
   return (
     <div onClick={startListening}>
-        <Button Button='Start'  onClick={startListening}/>
+      <Button Button={isListening ? "Listening..." : "Speak"} />
     </div>
-    
   );
 };
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Core from './../Components/Core'
 import ChatBox from './../Components/ChatBox'
 import Box1 from './../Components/Box1'
@@ -11,7 +11,15 @@ import Vocetotext from './../Components/VoicetoText'
 
 const Main = () => {
 
-  
+  const [messages, setMessages] = useState([
+    { text: "Hello, how can I assist you?", sender: "ai" }
+  ]);
+
+  // Function to add messages from input or voice
+  const addMessage = (text) => {
+    if (!text.trim()) return;
+    setMessages((prev) => [...prev, { text, sender: "user" }]);
+  };
 
 
   return (
@@ -81,7 +89,8 @@ const Main = () => {
           <Button Button='AI Black Board'  />
         </Link>
 
-        <Vocetotext />
+        <Vocetotext onVoiceInput={addMessage}/>
+   
 
         <Button Button='Personal Agent'/>
 
@@ -120,7 +129,7 @@ const Main = () => {
           <AudioVisualizer />
           </div>
           
-          <ChatBox />
+          <ChatBox messages={messages} setMessages={setMessages} />
         </div>
      
       </div>
