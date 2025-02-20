@@ -6,7 +6,7 @@ const cors = require('cors');
 const connectToDB = require('./Database/DB');
 const cookieParser = require('cookie-parser');
 const userRoute = require('./Routes/chat.route');
-const captainRoute = require('./Routes/captain.route');
+
 
 
 
@@ -24,6 +24,6 @@ app.use(cookieParser());
 
 
 app.use('/api', userRoute);
-app.use('/captains', captainRoute);
+
 
 module.exports = app;
