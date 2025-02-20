@@ -216,8 +216,8 @@ const DrawingCanvas = () => {
                 </div>
             )}
 
-            <Link to='/' className='absolute bottom-1 right-5'>
-            <div className='bg-cyan-400 w-35 absolute bottom-30 right-20  rounded-full blur-[100px] h-35'></div>
+            <Link to='/' className='absolute -bottom-5 -right-5'>
+            <div className='bg-cyan-400 w-35 absolute bottom-23 right-20  rounded-full blur-[100px] h-35'></div>
             <Core2 />
             </Link>
         </div>
