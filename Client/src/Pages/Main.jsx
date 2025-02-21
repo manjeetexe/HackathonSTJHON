@@ -53,8 +53,7 @@ const Main = () => {
   const addMessage = (text) => {
     if (!text.trim()) return;
   
-    setMessages((prev) => [...prev, { text, sender: "user" }]);
-    console.log(text)
+    
     // Now call sendMessage to get AI response
     sendMessage(text);
   };
