@@ -208,7 +208,7 @@ const DrawingCanvas = () => {
 
            
             {answer && (
-                <div className="absolute text-white text-[50px] font-bold" style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
+                <div className="absolute text-white text-[30px] font-bold" style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
                     {answer}
                 </div>
             )}
