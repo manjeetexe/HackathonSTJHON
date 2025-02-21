@@ -216,6 +216,7 @@ const DrawingCanvas = () => {
             )}
 
            <div className='absolute bottom-0 right-0'>
+            <div className='bg-cyan-400 absolute bottom-22 blur-3xl right-22 rounded-full  h-30 w-30'></div>
                  <Core2 />
            </div>
         </div>
