@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Core from './../Components/Core'
-import ChatBox from './../Components/ChatBox'
+import FuturisticChat from './../Components/ChatBox'
 import Box1 from './../Components/Box1'
 import HackerTerminal from './../Components/Hackingterminal'
 import AudioVisualizer from './../Components/Audioanlize'
@@ -15,10 +15,48 @@ const Main = () => {
     { text: "Hello, how can I assist you?", sender: "ai" }
   ]);
 
-  // Function to add messages from input or voice
+  // Function to send messages to the backend
+  const sendMessage = async (text) => {
+    if (!text.trim()) return;
+
+    setMessages((prev) => [
+      ...prev,
+      { text, sender: "user" },
+      { text: "Typing...", sender: "ai", temp: true }, 
+    ]);
+
+    try {
+      const res = await fetch("http://localhost:8000/api/chat", {
+        method: "POST",
+        body: JSON.stringify({ message: text }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) throw new Error("Server error");
+
+      const data = await res.json();
+
+      // Remove "Typing..." and add AI's response
+      setMessages((prev) => [
+        ...prev.filter((msg) => !msg.temp),
+        { text: data.response, sender: "ai" }
+      ]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev.filter((msg) => !msg.temp),
+        { text: "Error: Unable to fetch response", sender: "ai" }
+      ]);
+    }
+  };
+
+  // Function to handle both text input and voice input
   const addMessage = (text) => {
     if (!text.trim()) return;
+  
     setMessages((prev) => [...prev, { text, sender: "user" }]);
+    console.log(text)
+    // Now call sendMessage to get AI response
+    sendMessage(text);
   };
 
 
@@ -129,7 +167,7 @@ const Main = () => {
           <AudioVisualizer />
           </div>
           
-          <ChatBox messages={messages} setMessages={setMessages} />
+          <FuturisticChat messages={messages} setMessages={setMessages} sendMessage={sendMessage} />
         </div>
      
       </div>
