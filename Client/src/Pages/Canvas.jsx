@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { FaEraser } from 'react-icons/fa';
 import Core2 from './../Components/Core2'
-import { Link } from 'react-router-dom';
 
 
 const DrawingCanvas = () => {
@@ -22,7 +21,7 @@ const DrawingCanvas = () => {
         canvas.height = window.innerHeight;
 
         const context = canvas.getContext('2d');
-        context.fillStyle = 'rgba(0, 0, 0)';
+        context.fillStyle = 'rgba(17, 17, 17, 0.99)';
         context.fillRect(0, 0, canvas.width, canvas.height);
         ctxRef.current = context;
 
@@ -62,7 +61,7 @@ const DrawingCanvas = () => {
 
         ctxRef.current.lineWidth = lineWidth;
         ctxRef.current.lineCap = 'round';
-        ctxRef.current.strokeStyle = isEraser ? 'rgba(0, 0, 0)' : strokeColor; // TODO
+        ctxRef.current.strokeStyle = isEraser ? 'rgba(17, 17, 17, 0.99)' : strokeColor;
 
         ctxRef.current.lineTo(x, y);
         ctxRef.current.stroke();
@@ -107,7 +106,7 @@ const DrawingCanvas = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8000/save-image', {
+            const response = await fetch('http://localhost:9000/save-image', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -135,7 +134,7 @@ const DrawingCanvas = () => {
     };
 
     return (
-        <div className="relative h-screen  w-screen">
+        <div className="relative h-screen w-screen">
             <canvas
                 ref={canvasRef}
                 onMouseDown={startDrawing}
@@ -216,10 +215,9 @@ const DrawingCanvas = () => {
                 </div>
             )}
 
-            <Link to='/' className='absolute -bottom-5 -right-5'>
-            <div className='bg-cyan-400 w-35 absolute bottom-23 right-20  rounded-full blur-[100px] h-35'></div>
-            <Core2 />
-            </Link>
+           <div className='absolute bottom-0 right-0'>
+                 <Core2 />
+           </div>
         </div>
     );
 };
