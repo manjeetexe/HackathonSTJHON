@@ -1,7 +1,7 @@
 const { validationResult } = require("express-validator");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const genAI = new GoogleGenerativeAI("AIzaSyBayHKeqw6-nNU4mDbwSQHd1pTLUInSE8M");
+const genAI = new GoogleGenerativeAI(process.env.APIKEY);
 
 module.exports.chatWithAi = async function (req, res) {
   try {
