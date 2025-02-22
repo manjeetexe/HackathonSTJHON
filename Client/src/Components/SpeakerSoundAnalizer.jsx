@@ -113,11 +113,17 @@ const AudioVisualizer = ({ isSpeaking }) => {
 
   return (
     <div className="flex justify-center relative items-center bg-black p-4 h-60 w-80 border rounded-md border-[#02fdff]">
-      <p className="absolute top-4 text-[#02fdff] left-5">
-        {isSpeaking ? (isWorking ? "AI Speaking..." : "Mic Access Denied") : "Idle"}
-      </p>
-      <canvas ref={canvasRef} className="w-full h-full" />
-    </div>
+  <p className="absolute top-4 text-[#02fdff] left-5">
+    {isSpeaking ? (isWorking ? "AI Speaking..." : "Mic Access Denied") : "Idle"}
+  </p>
+  
+  {/* Show the line only when isSpeaking is false */}
+  {!isSpeaking && (
+    <div className="w-full absolute top-1/2 border-t border-[#02fdff] h-1"></div>
+  )}
+
+  <canvas ref={canvasRef} className="w-full h-full" />
+</div>
   );
 };
 
