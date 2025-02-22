@@ -130,7 +130,7 @@ const Main = () => {
         
         
           <div className=''>
-            <SpeakerAudioAnalizer />
+            <SpeakerAudioAnalizer isSpeaking={isSpeaking}/>
           </div>
        
         
@@ -207,7 +207,7 @@ const Main = () => {
         <div className='className="flex flex-col  justify-center items-center '>
         
           <div className='mb-4'>
-          <AudioVisualizer />
+          <AudioVisualizer isSpeaking={isSpeaking}/>
           </div>
           
           <FuturisticChat messages={messages} setMessages={setMessages} sendMessage={sendMessage} />
