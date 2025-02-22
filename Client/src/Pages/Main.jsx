@@ -8,9 +8,15 @@ import SpeakerAudioAnalizer from './../Components/SpeakerSoundAnalizer'
 import Button from './../Components/Button'
 import { Link } from 'react-router-dom'
 import Vocetotext from './../Components/VoicetoText'
+let synth = window.speechSynthesis; // Global Speech API instance
+let utterance; // Store the speech instance
 
 const Main = () => {
 
+
+  
+
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const [messages, setMessages] = useState([
     { text: "Hello, how can I assist you?", sender: "ai" }
   ]);
@@ -18,48 +24,67 @@ const Main = () => {
   // Function to send messages to the backend
   const sendMessage = async (text) => {
     if (!text.trim()) return;
-
+  
     setMessages((prev) => [
       ...prev,
       { text, sender: "user" },
-      { text: "Typing...", sender: "ai", temp: true }, 
+      { text: "Typing...", sender: "ai", temp: true },
     ]);
-
+  
     try {
       const res = await fetch("http://localhost:8000/api/chat", {
         method: "POST",
         body: JSON.stringify({ message: text }),
         headers: { "Content-Type": "application/json" },
       });
-    
+  
       if (!res.ok) throw new Error("Server error");
-    
+  
       const data = await res.json();
-    
+  
       // Manipulate response
       let modifiedResponse = data.response
         .replace(/Google/gi, "Nexido")
         .replace(/Gemini/gi, "Zenox");
-    
+  
       // Remove "Typing..." and add AI's response
       setMessages((prev) => [
         ...prev.filter((msg) => !msg.temp),
-        { text: modifiedResponse, sender: "ai" }
+        { text: modifiedResponse, sender: "ai" },
       ]);
-    
+  
+      // Stop any ongoing speech before speaking new text
+      if (synth.speaking) {
+        synth.cancel();
+      }
+  
       // Convert text to speech
-      const synth = window.speechSynthesis;
-      const utterance = new SpeechSynthesisUtterance(modifiedResponse);
+      utterance = new SpeechSynthesisUtterance(modifiedResponse);
       utterance.lang = "en-US"; // Set language
       utterance.rate = 1; // Speed of speech
       utterance.pitch = 1; // Pitch of speech
+
+      utterance.onstart = () => setIsSpeaking(true);  // Show Stop button when speaking starts
+      utterance.onend = () => setIsSpeaking(false); 
+  
       synth.speak(utterance); // Speak the modified text
-    
+  
     } catch (error) {
       console.error("Error fetching chat response:", error);
     }
-
   };
+  
+  // Function to manually stop speech
+  const stopSpeech = () => {
+    if (synth.speaking) {
+      synth.cancel(); 
+      setIsSpeaking(false);
+    }
+  };
+
+
+
+
   // Function to handle both text input and voice input
   const addMessage = (text) => {
     if (!text.trim()) return;
@@ -137,9 +162,17 @@ const Main = () => {
           <Button Button='AI Black Board'  />
         </Link>
 
-        <Vocetotext onVoiceInput={addMessage}/>
-   
 
+        <div>
+            {isSpeaking ? (
+              <div onClick={stopSpeech} >
+                <Button Button='Stop AI'/>
+              </div>
+            ) : (
+              <Vocetotext onVoiceInput={sendMessage} />
+            )}
+        </div>
+        
         <Button Button='Personal Agent'/>
 
         </div>
