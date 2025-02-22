@@ -31,24 +31,35 @@ const Main = () => {
         body: JSON.stringify({ message: text }),
         headers: { "Content-Type": "application/json" },
       });
-
+    
       if (!res.ok) throw new Error("Server error");
-
+    
       const data = await res.json();
-
+    
+      // Manipulate response
+      let modifiedResponse = data.response
+        .replace(/Google/gi, "Nexido")
+        .replace(/Gemini/gi, "Zenox");
+    
       // Remove "Typing..." and add AI's response
       setMessages((prev) => [
         ...prev.filter((msg) => !msg.temp),
-        { text: data.response, sender: "ai" }
+        { text: modifiedResponse, sender: "ai" }
       ]);
+    
+      // Convert text to speech
+      const synth = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance(modifiedResponse);
+      utterance.lang = "en-US"; // Set language
+      utterance.rate = 1; // Speed of speech
+      utterance.pitch = 1; // Pitch of speech
+      synth.speak(utterance); // Speak the modified text
+    
     } catch (error) {
-      setMessages((prev) => [
-        ...prev.filter((msg) => !msg.temp),
-        { text: "Error: Unable to fetch response", sender: "ai" }
-      ]);
+      console.error("Error fetching chat response:", error);
     }
-  };
 
+  };
   // Function to handle both text input and voice input
   const addMessage = (text) => {
     if (!text.trim()) return;

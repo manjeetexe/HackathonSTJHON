@@ -10,7 +10,7 @@ const FuturisticChat = ({ messages, setMessages, sendMessage }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  console.log(messages);
+  console.log(messages);  
 
   return (
     <div className="w-80 h-120 bg-black/80 rounded-md border border-[#02fdff] p-2 text-[#02fdff] shadow-lg flex flex-col">
