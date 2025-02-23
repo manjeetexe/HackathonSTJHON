@@ -173,7 +173,9 @@ const Main = () => {
             )}
         </div>
         
-        <Button Button='Personal Agent'/>
+        <Link to='/Explain'>
+            <Button Button='Problem Solver'/>
+        </Link>
 
         </div>
         <Core />
