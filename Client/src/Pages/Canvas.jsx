@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { FaEraser } from 'react-icons/fa';
 import Core2 from './../Components/Core2'
+import { Link } from 'react-router-dom';
 
 
 const DrawingCanvas = () => {
@@ -213,10 +214,10 @@ const DrawingCanvas = () => {
                 </div>
             )}
 
-           <div className='absolute bottom-0 right-0'>
+           <Link to='/' className='absolute bottom-0 right-0'>
             <div className='bg-cyan-400 absolute bottom-22 blur-3xl right-22 rounded-full  h-30 w-30'></div>
                  <Core2 />
-           </div>
+           </Link>
         </div>
     );
 };

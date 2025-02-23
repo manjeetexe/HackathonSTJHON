@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import SpeakerSoundAnalizer from './../Components/SpeakerSoundAnalizer'
 import Core3 from './../Components/Core3'
+import { Link } from "react-router-dom";
 
 
 
@@ -91,7 +92,10 @@ export default function MathPhysicsSolver() {
 
                 <SpeakerSoundAnalizer />
 
-                <Core3 />
+                <Link to='/' className="relative ">
+                  <div className="h-40 absolute top-20 left-17 bg-[#02fdff] blur-[80px] w-40"></div>
+                      <Core3 />
+                </Link>
 
             </div>
           </div>
