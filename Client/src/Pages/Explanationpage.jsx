@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { Calculator, Info, Lightbulb, PlayCircle, RefreshCw, Sparkles, Type } from "lucide-react";
+import SpeakerSoundAnalizer from './../Components/SpeakerSoundAnalizer'
+import Core3 from './../Components/Core3'
+
+
+
+
+
 
 const graphData = [
   { x: -5, y: 25 },
@@ -18,76 +24,78 @@ const graphData = [
 
 export default function MathPhysicsSolver() {
   const [problem, setProblem] = useState("");
-  const [activeTab, setActiveTab] = useState("graph");
 
   return (
-    <div className="min-h-screen bg-black p-4 md:p-8">
+    <div className="min-h-screen bg-black text-white p-6">
       <div className="max-w-7xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl text-white font-bold">Math & Physics AI Solver</h1>
-          <button className="flex items-center gap-2 p-2 text-white border border-white rounded">
-            <RefreshCw className="w-4 h-4 text-white" /> New Problem
-          </button>
-        </div>
+        {/* Header */}
+        <header className="flex items-center justify-between border-b border-gray-600 pb-4">
+          <h1 className="text-3xl font-bold">Math & Physics Solver</h1>
+          <button className="bg-white text-black px-4 py-2 rounded hover:bg-gray-300">New Problem</button>
+        </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-6">
-            <div className="p-4 border border-white rounded">
-              <h2 className="text-xl  text-white font-semibold flex items-center gap-2">
-                <Type className="w-5 h-5" /> Enter Your Problem
-              </h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Left Side - Problem Input and Solution */}
+          <div className="space-y-4">
+            <div className="bg-white text-black p-4 rounded shadow">
+              <h2 className="text-lg font-semibold">Enter Your Problem</h2>
               <textarea
-                placeholder="Enter your math or physics problem here..."
-                className="w-full p-2 border border-white rounded"
+                placeholder="Type your math or physics problem here..."
+                className="w-full mt-2 p-2 bg-gray-100 text-black rounded resize-none"
+                rows="4"
                 value={problem}
                 onChange={(e) => setProblem(e.target.value)}
-              />
-              <button className="w-full mt-2 p-2 bg-blue-500 text-white rounded flex items-center gap-2">
-                <Sparkles className="w-4 h-4" /> Solve Problem
-              </button>
+              ></textarea>
+              <button className="mt-2 bg-black text-white px-4 py-2 rounded hover:bg-gray-800 w-full">Solve</button>
             </div>
 
-            <div className="p-4 border border-white rounded">
-              <h2 className="text-xl text-white font-semibold flex items-center gap-2">
-                <PlayCircle className="w-5 h-5 text-white" /> Step-by-Step Solution
-              </h2>
-              <div className="space-y-4"> {/* Solution steps here */} </div>
+
+            <div className="bg-white text-black p-4 rounded shadow">
+              <h2 className="text-lg font-semibold">Insights</h2>
+              <ul className="text-gray-700 list-disc pl-4">
+                <li>Step-by-step breakdown of the problem.</li>
+                <li>Graph for better understanding.</li>
+                <li>Supports math and physics problems.</li>
+              </ul>
+            </div>
+
+            <div className="bg-white text-black p-4 rounded shadow">
+              <h2 className="text-lg font-semibold">Step-by-Step Solution</h2>
+              <div className="mt-2 text-gray-700">
+                {/* Solution steps will be displayed dynamically */}
+                No solution yet.
+              </div>
             </div>
           </div>
 
+          {/* Right Side - Graph and Insights */}
           <div className="space-y-6">
-            <div className="p-4 border text-white border-white rounded">
-              <h2 className="text-xl font-semibold flex items-center gap-2">Visualization</h2>
-              <div className="flex gap-2 mt-2">
-                <button className="p-2 border rounded" onClick={() => setActiveTab("graph")}>Graph</button>
-                <button className="p-2 border rounded" onClick={() => setActiveTab("structure")}>Structure</button>
-                <button className="p-2 border rounded" onClick={() => setActiveTab("calculator")}>Calculator</button>
-              </div>
-              <div className="mt-4 h-[400px] border rounded flex items-center justify-center">
-                {activeTab === "graph" && (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={graphData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="x" domain={[-5, 5]} type="number" />
-                      <YAxis domain={[0, 25]} />
-                      <Tooltip />
-                      <Line type="monotone" dataKey="y" stroke="#2563eb" strokeWidth={2} dot={false} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                )}
-                {activeTab === "structure" && <Info className="w-12 h-12 text-gray-400" />}
-                {activeTab === "calculator" && <Calculator className="w-12 h-12 text-gray-400" />}
+            <div className="bg-white text-black p-4 rounded shadow">
+              <h2 className="text-lg font-semibold">Graph Representation</h2>
+              <div className="h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={graphData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="gray" />
+                    <XAxis dataKey="x" stroke="black" />
+                    <YAxis stroke="black" />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="y" stroke="black" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             </div>
 
-            <div className="p-4 border text-white  rounded">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Lightbulb className="w-5 h-5" /> Key Insights
-              </h2>
-              <p className="text-gray-400">• The solution includes step-by-step breakdowns.</p>
-              <p className="text-gray-400">• Graph and structure help visualize the problem.</p>
+            
+            <div className="flex w-full justify-between items-center">
+                
+
+                <SpeakerSoundAnalizer />
+
+                <Core3 />
+
             </div>
           </div>
+        
         </div>
       </div>
     </div>
