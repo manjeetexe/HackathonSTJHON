@@ -38,31 +38,31 @@ export default function MathPhysicsSolver() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Left Side - Problem Input and Solution */}
           <div className="space-y-4">
-            <div className="bg-white text-black p-4 rounded shadow">
-              <h2 className="text-lg font-semibold">Enter Your Problem</h2>
+            <div className=" border border-[#02fdff] text-black p-4 rounded shadow">
+              <h2 className="text-lg text-[#02fdff] font-semibold">Enter Your Problem</h2>
               <textarea
                 placeholder="Type your math or physics problem here..."
-                className="w-full mt-2 p-2 bg-gray-100 text-black rounded resize-none"
+                className="w-full mt-2 p-2 bg-[#036363] text-[#02fdff] rounded resize-none"
                 rows="4"
                 value={problem}
                 onChange={(e) => setProblem(e.target.value)}
               ></textarea>
-              <button className="mt-2 bg-black text-white px-4 py-2 rounded hover:bg-gray-800 w-full">Solve</button>
+              <button className="mt-2  text-black font-black px-4 py-2 rounded bg-[#02fdff] hover:bg-[#02ffffd8] w-full">Solve</button>
             </div>
 
 
-            <div className="bg-white text-black p-4 rounded shadow">
-              <h2 className="text-lg font-semibold">Insights</h2>
-              <ul className="text-gray-700 list-disc pl-4">
+            <div className="bg-[#036363] text-black p-4 rounded shadow">
+              <h2 className="text-lg text-[#02fdff] font-semibold">Insights</h2>
+              <ul className="text-[#02fdff] list-disc pl-4">
                 <li>Step-by-step breakdown of the problem.</li>
                 <li>Graph for better understanding.</li>
                 <li>Supports math and physics problems.</li>
               </ul>
             </div>
 
-            <div className="bg-white text-black p-4 rounded shadow">
-              <h2 className="text-lg font-semibold">Step-by-Step Solution</h2>
-              <div className="mt-2 text-gray-700">
+            <div className="bg-[#036363] text-black p-4 rounded shadow">
+              <h2 className="text-lg text-[#02fdff] font-semibold">Step-by-Step Solution</h2>
+              <div className="mt-2 text-[#02fdff]">
                 {/* Solution steps will be displayed dynamically */}
                 No solution yet.
               </div>
@@ -71,16 +71,16 @@ export default function MathPhysicsSolver() {
 
           {/* Right Side - Graph and Insights */}
           <div className="space-y-6">
-            <div className="bg-white text-black p-4 rounded shadow">
+            <div className="bg-[#0363638f] text-[#02fdff] p-4 rounded shadow">
               <h2 className="text-lg font-semibold">Graph Representation</h2>
               <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={graphData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="gray" />
-                    <XAxis dataKey="x" stroke="black" />
-                    <YAxis stroke="black" />
+                    <XAxis dataKey="x" stroke="#02fdff" />
+                    <YAxis stroke="#02fdff" />
                     <Tooltip />
-                    <Line type="monotone" dataKey="y" stroke="black" strokeWidth={2} />
+                    <Line type="monotone" dataKey="y" stroke="#02fdff" strokeWidth={2} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
