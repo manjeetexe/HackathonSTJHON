@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 const userRoute = require('./Routes/chat.route');
 
 
-const genAI = new GoogleGenerativeAI('AIzaSyARVGWfgplQMxVb2Xp2gXwQ4s4ukjJHy-o');
+const genAI = new GoogleGenerativeAI(process.env.APIKEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const app = express();
