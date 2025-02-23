@@ -209,10 +209,10 @@ const Main = () => {
         <div className='className="flex flex-col  justify-center items-center '>
         
           <div className='mb-4'>
-          <AudioVisualizer isSpeaking={isSpeaking}/>
+            <AudioVisualizer isSpeaking={isSpeaking}/>
           </div>
           
-          <FuturisticChat messages={messages} setMessages={setMessages} sendMessage={sendMessage} />
+            <FuturisticChat messages={messages} setMessages={setMessages} sendMessage={sendMessage} />
         </div>
      
       </div>
