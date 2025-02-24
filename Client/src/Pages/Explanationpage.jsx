@@ -12,17 +12,20 @@ const graphData = [
 
 export default function MathPhysicsSolver() {
   const [problem, setProblem] = useState("");
-  const [solution, setSolution] = useState("No solution yet.");
+  const [solution, setSolution] = useState({});
   const [loading, setLoading] = useState(false);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [showFullSolution, setShowFullSolution] = useState(false);
 
-  // Function to send problem to backend
   const handleSolveProblem = async () => {
     if (!problem.trim()) {
       console.log("Please enter a problem.");
       return;
     }
-  
+
     setLoading(true);
+    setShowFullSolution(false);
+    setCurrentStepIndex(0);
 
     try {
       const response = await fetch("http://localhost:8000/solve", {
@@ -30,32 +33,36 @@ export default function MathPhysicsSolver() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ problem }),
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to fetch solution");
       }
-  
+
       const data = await response.json();
-      
+
       if (data.solution && typeof data.solution === "object") {
         setSolution(data.solution);
       } else {
-        setSolution("Invalid response from AI.");
+        setSolution({});
       }
     } catch (error) {
       console.error("Error solving problem:", error);
-      setSolution("Error fetching solution.");
+      setSolution({});
     } finally {
       setLoading(false);
     }
   };
 
-  // Function to reset the problem and solution
   const handleNewProblem = () => {
-    setProblem("");  // Clear the input field
-    setSolution("No solution yet.");  // Reset solution
-    setLoading(false); // Stop any loading state
+    setProblem("");
+    setSolution({});
+    setLoading(false);
+    setCurrentStepIndex(0);
+    setShowFullSolution(false);
   };
+
+  const steps = Object.entries(solution);
+  const currentStep = steps[currentStepIndex] || ["", "No solution available"];
 
   return (
     <div className="min-h-screen bg-[#010a0a] text-white p-6 flex justify-center items-center">
@@ -64,7 +71,7 @@ export default function MathPhysicsSolver() {
           <h1 className="text-3xl font-bold text-[#02fdff]">Math & Physics Solver</h1>
           <button 
             className="bg-[#02fdff] text-black font-semibold px-5 py-2 rounded-lg hover:bg-[#02c7c7] transition"
-            onClick={handleNewProblem} // Reset when clicked
+            onClick={handleNewProblem}
           >
             New Problem
           </button>
@@ -92,17 +99,53 @@ export default function MathPhysicsSolver() {
             </div>
 
             {/* Display Solution */}
-            <div className="bg-[#012f2f] border border-[#02fdff] h-193 text-black p-4 rounded-lg shadow">
-              <h2 className="text-lg text-[#02fdff] font-semibold">Step-by-Step Solution</h2>
+            <div className="bg-[#012f2f] border border-[#02fdff] min-h-[200px] text-black p-4 rounded-lg shadow">
+              <h2 className="text-3xl text-[#02fdff] font-semibold">Step-by-Step Solution</h2>
               <div className="mt-2 text-[#02fdff] whitespace-pre-line">
-                {loading ? "Thinking..." : 
-                  (typeof solution === "object"
-                    ? Object.entries(solution)
-                        .map(([key, value]) => `**${key}**:\n${value}`)
-                        .join("\n\n")
-                    : solution)
-                }
+                {loading ? (
+                  "Thinking..."
+                ) : showFullSolution ? (
+                  steps.map(([key, value], index) => (
+                    <div key={index} className="mb-4">
+                      <div className="text-3xl font-bold text-yellow-400">{key}</div>
+                      <div className="text-xl text-[#02fdff] mt-1">{value}</div>
+                    </div>
+                  ))
+                ) : (
+                  <div>
+                    <div className="text-3xl font-bold text-yellow-400">{currentStep[0]}</div>
+                    <div className="text-xl text-[#02fdff] mt-1">{currentStep[1]}</div>
+                  </div>
+                )}
               </div>
+
+              {/* Step Navigation Buttons */}
+              <div className="flex justify-between mt-4">
+                <button
+                  className="text-black font-bold px-4 py-2 rounded-lg bg-[#02fdff] hover:bg-[#02c7c7] transition disabled:opacity-50"
+                  onClick={() => setCurrentStepIndex((prev) => Math.max(prev - 1, 0))}
+                  disabled={currentStepIndex === 0}
+                >
+                  Previous Step
+                </button>
+
+                <button
+                  className="text-black font-bold px-4 py-2 rounded-lg bg-[#02fdff] hover:bg-[#02c7c7] transition disabled:opacity-50"
+                  onClick={() => setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1))}
+                  disabled={currentStepIndex === steps.length - 1}
+                >
+                  Next Step
+                </button>
+              </div>
+
+              {/* Show Full Solution Button */}
+              <button
+                className="mt-4 w-full text-black font-bold px-4 py-2 rounded-lg bg-[#02fdff] hover:bg-[#02c7c7] transition"
+                onClick={() => setShowFullSolution(true)}
+                disabled={showFullSolution}
+              >
+                Show Full Solution
+              </button>
             </div>
           </div>
 
@@ -126,8 +169,7 @@ export default function MathPhysicsSolver() {
 
               <div className="flex w-full justify-between ">
                 <SpeakerSoundAnalizer />
-                <Link to="/" className="relative bottom-7 -right-5">
-                  <div className="h-40 absolute top-10 left-17 bg-[#02fdff] blur-[80px] w-40"></div>
+                <Link to="/">
                   <Core3 />
                 </Link>
               </div>
