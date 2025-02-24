@@ -33,6 +33,7 @@ export default function MathPhysicsSolver() {
       }
 
       const data = await response.json();
+      console.log(data)
       setSolution(data.solution); // Update UI with the solution
       console.log("Solution:", data.solution); // Log solution in console
 

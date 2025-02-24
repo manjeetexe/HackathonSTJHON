@@ -1,8 +1,18 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 from dotenv import load_dotenv
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Your frontend URLs
+    allow_credentials=True,
+    allow_methods=["*"],  # Restrict methods if needed
+    allow_headers=["*"],  
+)
 
 # Load environment variables
 load_dotenv()
@@ -10,7 +20,7 @@ api_key = os.getenv("API_KEY")
 os.environ["GOOGLE_API_KEY"] = api_key
 
 # Initialize FastAPI app
-app = FastAPI()
+
 
 # Load the Gemini model
 llm = ChatGoogleGenerativeAI(model="gemini-pro")
@@ -23,21 +33,34 @@ class ProblemRequest(BaseModel):
 
 # Function to solve problem with chat history
 def solve_problem(question):
-    """Handles chat with memory using structured history."""
     global chat_history
 
-    # Format chat history
     history_text = "\n".join([f"User: {h['user']}\nAI: {h['ai']}" for h in chat_history])
-    full_prompt = f"{history_text}\nUser: {question}\nAI:"
+    
+    full_prompt = f"""{history_text}
+    User: {question}
+    AI: Please provide a detailed, step-by-step explanation before giving the final answer. Explain the concepts involved and break down the solution into logical steps.
+    """
+    
+    print("Prompt:", full_prompt)
 
-    # Get AI response
-    response = llm.invoke(full_prompt)
-    ai_response = response.content if hasattr(response, "content") else str(response)
+    try:
+        response = llm.invoke(full_prompt)
 
-    # Append to chat history
-    chat_history.append({"user": question, "ai": ai_response})
+        if not response or not hasattr(response, "content") or not response.content.strip():
+            return "Sorry, I couldn't generate a response. Try rephrasing the question."
 
-    return ai_response
+        ai_response = response.content.strip()
+
+        # Append to chat history
+        chat_history.append({"user": question, "ai": ai_response})
+
+        return ai_response
+
+    except Exception as e:
+        print("Error calling Gemini API:", str(e))
+        return "An error occurred while generating a response."
+
 
 
 @app.get("/")
