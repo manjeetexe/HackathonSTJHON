@@ -13,6 +13,7 @@ const graphData = [
 export default function MathPhysicsSolver() {
   const [problem, setProblem] = useState("");
   const [solution, setSolution] = useState("No solution yet.");
+  const [loading, setLoading] = useState(false);
 
   // Function to send problem to backend
   const handleSolveProblem = async () => {
@@ -20,6 +21,8 @@ export default function MathPhysicsSolver() {
       console.log("Please enter a problem.");
       return;
     }
+  
+    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:8000/solve", {
@@ -27,19 +30,31 @@ export default function MathPhysicsSolver() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ problem }),
       });
-
+  
       if (!response.ok) {
         throw new Error("Failed to fetch solution");
       }
-
+  
       const data = await response.json();
-      console.log(data)
-      setSolution(data.solution); // Update UI with the solution
-      console.log("Solution:", data.solution); // Log solution in console
-
+      
+      if (data.solution && typeof data.solution === "object") {
+        setSolution(data.solution);
+      } else {
+        setSolution("Invalid response from AI.");
+      }
     } catch (error) {
       console.error("Error solving problem:", error);
+      setSolution("Error fetching solution.");
+    } finally {
+      setLoading(false);
     }
+  };
+
+  // Function to reset the problem and solution
+  const handleNewProblem = () => {
+    setProblem("");  // Clear the input field
+    setSolution("No solution yet.");  // Reset solution
+    setLoading(false); // Stop any loading state
   };
 
   return (
@@ -47,7 +62,12 @@ export default function MathPhysicsSolver() {
       <div className="max-w-7xl w-full space-y-6">
         <header className="flex items-center justify-between border-b border-[#02fdff] pb-4">
           <h1 className="text-3xl font-bold text-[#02fdff]">Math & Physics Solver</h1>
-          <button className="bg-[#02fdff] text-black font-semibold px-5 py-2 rounded-lg hover:bg-[#02c7c7] transition">New Problem</button>
+          <button 
+            className="bg-[#02fdff] text-black font-semibold px-5 py-2 rounded-lg hover:bg-[#02c7c7] transition"
+            onClick={handleNewProblem} // Reset when clicked
+          >
+            New Problem
+          </button>
         </header>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -65,15 +85,24 @@ export default function MathPhysicsSolver() {
               <button
                 className="mt-3 text-black font-bold px-5 py-2 rounded-lg bg-[#02fdff] hover:bg-[#02c7c7] w-full transition"
                 onClick={handleSolveProblem}
+                disabled={loading}
               >
-                Solve
+                {loading ? "Thinking..." : "Solve"}
               </button>
             </div>
 
             {/* Display Solution */}
             <div className="bg-[#012f2f] border border-[#02fdff] h-193 text-black p-4 rounded-lg shadow">
               <h2 className="text-lg text-[#02fdff] font-semibold">Step-by-Step Solution</h2>
-              <div className="mt-2 text-[#02fdff]">{solution}</div>
+              <div className="mt-2 text-[#02fdff] whitespace-pre-line">
+                {loading ? "Thinking..." : 
+                  (typeof solution === "object"
+                    ? Object.entries(solution)
+                        .map(([key, value]) => `**${key}**:\n${value}`)
+                        .join("\n\n")
+                    : solution)
+                }
+              </div>
             </div>
           </div>
 
