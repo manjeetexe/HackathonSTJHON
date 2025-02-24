@@ -78,7 +78,6 @@ export default function MathPhysicsSolver() {
         </header>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Left Side - Problem Input and Solution */}
           <div className="space-y-6">
             <div className="border border-[#02fdff] text-black p-4 rounded-lg shadow bg-[#012f2f]">
               <h2 className="text-lg text-[#02fdff] font-semibold">Enter Your Problem</h2>
@@ -98,7 +97,6 @@ export default function MathPhysicsSolver() {
               </button>
             </div>
 
-            {/* Display Solution */}
             <div className="bg-[#012f2f] border border-[#02fdff] min-h-[200px] text-black p-4 rounded-lg shadow">
               <h2 className="text-3xl text-[#02fdff] font-semibold">Step-by-Step Solution</h2>
               <div className="mt-2 text-[#02fdff] whitespace-pre-line">
@@ -119,7 +117,6 @@ export default function MathPhysicsSolver() {
                 )}
               </div>
 
-              {/* Step Navigation Buttons */}
               <div className="flex justify-between mt-4">
                 <button
                   className="text-black font-bold px-4 py-2 rounded-lg bg-[#02fdff] hover:bg-[#02c7c7] transition disabled:opacity-50"
@@ -138,18 +135,15 @@ export default function MathPhysicsSolver() {
                 </button>
               </div>
 
-              {/* Show Full Solution Button */}
               <button
                 className="mt-4 w-full text-black font-bold px-4 py-2 rounded-lg bg-[#02fdff] hover:bg-[#02c7c7] transition"
-                onClick={() => setShowFullSolution(true)}
-                disabled={showFullSolution}
+                onClick={() => setShowFullSolution(!showFullSolution)}
               >
-                Show Full Solution
+                {showFullSolution ? "Show Less Solution" : "Show Full Solution"}
               </button>
             </div>
           </div>
 
-          {/* Right Side - Graph and Insights */}
           <div className="relative">
             <div className="space-y-6 sticky top-5">
               <div className="bg-[#012f2f] border border-[#02fdff] text-[#02fdff] p-4 rounded-lg shadow">
@@ -166,7 +160,6 @@ export default function MathPhysicsSolver() {
                   </ResponsiveContainer>
                 </div>
               </div>
-
               <div className="flex w-full justify-between ">
                 <SpeakerSoundAnalizer />
                 <Link to="/">
