@@ -2,9 +2,12 @@ from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 import google.generativeai as genai
 import os
+from dotenv import load_dotenv
+load_dotenv("/Users/manjeet/Desktop/HackathonSTJHON/.env")
 
 # Set API Key (replace with your actual API key)
-os.environ["GOOGLE_API_KEY"] = "AIzaSyARVGWfgplQMxVb2Xp2gXwQ4s4ukjJHy-o"
+api_key = os.getenv("API_KEY")
+os.environ["GOOGLE_API_KEY"] = api_key
 
 # Initialize Gemini LLM using LangChain wrapper
 llm = ChatGoogleGenerativeAI(model="gemini-pro")

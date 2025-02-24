@@ -1,3 +1,4 @@
 quantum_env
 .venv
 gemini-math-solver
+.env
