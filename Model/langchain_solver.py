@@ -5,6 +5,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 from dotenv import load_dotenv
 app = FastAPI()
+import json
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,7 +32,7 @@ chat_history = []
 class ProblemRequest(BaseModel):
     problem: str
 
-# Function to solve problem with chat history
+
 def solve_problem(question):
     global chat_history
 
@@ -39,28 +40,42 @@ def solve_problem(question):
     
     full_prompt = f"""{history_text}
     User: {question}
-    AI: Please provide a detailed, step-by-step explanation before giving the final answer. Explain the concepts involved and break down the solution into logical steps.
-    """
+    AI: Please provide a detailed step-by-step explanation in JSON format like this:
     
+    {{
+        "step1": "Explain the concept involved.",
+        "step2": "Break down the first part of the solution.",
+        "step3": "Continue solving the problem step by step.",
+        "final_answer": "Provide the final answer here."
+    }}
+    
+    Ensure that the response is a valid JSON object.
+    """
+
     print("Prompt:", full_prompt)
 
     try:
         response = llm.invoke(full_prompt)
 
         if not response or not hasattr(response, "content") or not response.content.strip():
-            return "Sorry, I couldn't generate a response. Try rephrasing the question."
+            return {"error": "Sorry, I couldn't generate a response. Try rephrasing the question."}
 
         ai_response = response.content.strip()
 
-        # Append to chat history
-        chat_history.append({"user": question, "ai": ai_response})
+        # Ensure the response is valid JSON
+        try:
+            structured_response = json.loads(ai_response)
+        except json.JSONDecodeError:
+            return {"error": "AI response is not in valid JSON format. Try asking again."}
 
-        return ai_response
+        # Append to chat history
+        chat_history.append({"user": question, "ai": structured_response})
+
+        return structured_response
 
     except Exception as e:
         print("Error calling Gemini API:", str(e))
-        return "An error occurred while generating a response."
-
+        return {"error": "An error occurred while generating a response."}
 
 
 @app.get("/")
