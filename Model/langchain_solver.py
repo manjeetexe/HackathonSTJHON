@@ -5,12 +5,11 @@ import os
 from dotenv import load_dotenv
 load_dotenv("/Users/manjeet/Desktop/HackathonSTJHON/.env")
 
-# Set API Key (replace with your actual API key)
+
 api_key = os.getenv("API_KEY")
 os.environ["GOOGLE_API_KEY"] = api_key
-
-# Initialize Gemini LLM using LangChain wrapper
 llm = ChatGoogleGenerativeAI(model="gemini-pro")
+
 
 # Define a structured prompt
 prompt = PromptTemplate.from_template(
@@ -26,7 +25,7 @@ def solve_problem(question):
     # Extract only the content (clean output)
     return response.content if hasattr(response, "content") else str(response)
 
-# Example usage
+
 if __name__ == "__main__":
     problem = "A ball is thrown vertically upward with a velocity of 20 m/s. Find the time taken to reach the highest point."
     solution = solve_problem(problem)
