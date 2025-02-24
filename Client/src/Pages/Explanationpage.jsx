@@ -78,13 +78,25 @@ export default function MathPhysicsSolver() {
               </div>
             </div>
 
-            <div className="flex w-full  justify-between ">
+            <div className="flex w-full justify-between ">
               <SpeakerSoundAnalizer />
 
-              <Link to="/" className="relative">
-                <div className="h-40 absolute top-20 left-17 bg-[#02fdff] blur-[80px] w-40"></div>
+              <Link to="/" className="relative bottom-7 -right-5">
+                <div className="h-40 absolute top-10 left-17 bg-[#02fdff] blur-[80px] w-40"></div>
                 <Core3 />
               </Link>
+            </div>
+
+            <div className="border border-[#02fdff]   text-black p-4 rounded-lg shadow bg-[#012f2f]">
+              <h2 className="text-lg text-[#02fdff] font-semibold">Enter Your Problem</h2>
+              <textarea
+                placeholder="Type your math or physics problem here..."
+                className="w-full mt-2 p-3 bg-[#024b4b] text-[#02fdff] rounded-lg resize-none outline-none focus:ring-2 focus:ring-[#02fdff]"
+                rows="4"
+                value={problem}
+                onChange={(e) => setProblem(e.target.value)}
+              ></textarea>
+              <button className="mt-3 text-black font-bold px-5 py-2 rounded-lg bg-[#02fdff] hover:bg-[#02c7c7] w-full transition">Solve</button>
             </div>
           </div>
           </div>
