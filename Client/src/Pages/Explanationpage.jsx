@@ -39,7 +39,7 @@ export default function MathPhysicsSolver() {
       }
 
       const data = await response.json();
-
+      console.log(data);
       if (data.solution && typeof data.solution === "object") {
         setSolution(data.solution);
       } else {
