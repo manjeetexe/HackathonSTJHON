@@ -28,106 +28,134 @@ os.environ["GOOGLE_API_KEY"] = api_key
 # Load Gemini AI model
 llm = ChatGoogleGenerativeAI(model="gemini-pro")
 
-# Store chat history
-chat_history = []
-
 # Request body model
 class ProblemRequest(BaseModel):
     problem: str
 
 
-# ✅ Function to Generate Graph Data
-def generate_graph(equation_str):
-    try:
-        x = sp.symbols('x')  # Define the variable
-        expression = sp.sympify(equation_str)  # Convert string to symbolic expression
+# ✅ Function to Extract Only the Equation
+def extract_equation_and_graph(question):
+    """
+    Uses Gemini AI to extract the main equation and generate graph data.
+    """
+    prompt = f"""
+    Extract the main equation from this math problem and generate graph data.
 
-        # Handle log(x) to avoid math errors
-        if "log" in equation_str or "ln" in equation_str:
-            x_values = np.linspace(0.1, 10, 100)  # Avoid negative values
-        else:
-            x_values = np.linspace(-10, 10, 100)
+    Problem: "{question}"
 
-        y_values = [float(expression.subs(x, val)) for val in x_values]  # Compute y values
-
-        graph_data = [{"x": float(x), "y": y} for x, y in zip(x_values, y_values)]
-        return graph_data
-
-    except Exception as e:
-        return {"error": str(e)}
-
-
-# ✅ AI Prompt to Solve Question & Extract Equation
-def solve_problem_and_identify_equation(question):
-    global chat_history
-    print(chat_history)
-
-    # Create conversation history
-    history_text = "\n".join([f"User: {h['user']}\nAI: {h['ai']}" for h in chat_history])
-
-    # AI prompt with JSON structure
-    full_prompt = f"""{history_text}
-    User: {question}
-    AI: Please provide a detailed step-by-step explanation in JSON format like this:
+    - Do NOT include explanations or extra text.
+    - Return ONLY a JSON object like this:
 
     {{
-        "steps": [
-            "Step 1: Explain the concept involved.",
-            "Step 2: Break down the first part of the solution.",
-            "Step 3: Continue solving the problem step by step.",
-            "Final Answer: Provide the final answer here."
-        ],
-        "equation": "Extract the main equation from the problem here."
+        "equation": "x^2 + 2x + 1",
+        "graph_data": [
+            {{"x": -5, "y": 25}},
+            {{"x": -4, "y": 16}},
+            {{"x": -3, "y": 9}},
+            {{"x": -2, "y": 4}},
+            {{"x": -1, "y": 1}},
+            {{"x": 0, "y": 0}},
+            {{"x": 1, "y": 1}},
+            {{"x": 2, "y": 4}},
+            {{"x": 3, "y": 9}},
+            {{"x": 4, "y": 16}},
+            {{"x": 5, "y": 25}}
+        ]
     }}
 
-    Ensure that the response is a valid JSON object.
+    If there's no valid equation, return:
+
+    {{
+        "equation": "",
+        "graph_data": []
+    }}
     """
-    print(full_prompt)
+
     try:
-        response = llm.invoke(full_prompt)
-        print(response)
+        response = llm.invoke(prompt)
+        ai_response = response.content.strip()
 
-        if not response or not hasattr(response, "content") or not response.content.strip():
-            return {"error": "Sorry, I couldn't generate a response. Try rephrasing the question."}
+        print("🔍 Raw AI Response:", ai_response)  # Debugging
 
+        # Ensure AI response is valid JSON
+        try:
+            structured_response = json.loads(ai_response)
+        except json.JSONDecodeError:
+            print("⚠️ AI returned invalid JSON!")
+            return None  # Handle JSON format error
+
+        equation = structured_response.get("equation", "").strip()
+        graph_data = structured_response.get("graph_data", [])
+
+        if not equation:
+            print("⚠️ No equation detected!")
+            return None  # Handle empty equation case
+
+        return {"equation": equation, "graph_data": graph_data}
+
+    except Exception as e:
+        print(f"❌ Error in extract_equation_and_graph(): {str(e)}")
+        return None  # Handle API errors
+
+# ✅ Function to Get AI Solution Steps
+def solve_problem(question):
+    """
+    Uses Gemini AI to generate a step-by-step solution.
+    """
+    prompt = f"""
+    Solve the following math problem with a step-by-step explanation:
+
+    {question}
+
+    Provide the response in a valid JSON format:
+    {{
+        "steps": [
+            "Step 1: Explain the concept.",
+            "Step 2: Apply relevant formulas.",
+            "Step 3: Solve step by step.",
+            "Final Answer: Provide the final answer here."
+        ]
+    }}
+    """
+
+    try:
+        response = llm.invoke(prompt)
         ai_response = response.content.strip()
 
         # Validate JSON response
         try:
             structured_response = json.loads(ai_response)
+            return structured_response.get("steps", [])
         except json.JSONDecodeError:
-            return {"error": "AI response is not in valid JSON format. Try asking again."}
-
-        # Append to chat history
-        chat_history.append({"user": question, "ai": structured_response})
-
-        return structured_response
+            return ["Error: AI response not in JSON format."]  # Handle invalid JSON
 
     except Exception as e:
-        return {"error": f"An error occurred: {str(e)}"}
+        return [f"Error: {str(e)}"]  # Handle API failures
 
 
-# ✅ Single Route for Solving + Graph Data
+# ✅ Function to Generate Graph Data in JavaScript Format
+
+# ✅ API Route: Solve Problem + Generate Graph
 @app.post("/solve")
 def solve_and_generate_graph(request: ProblemRequest):
     if not request.problem:
         raise HTTPException(status_code=400, detail="Problem cannot be empty")
 
-    # 1️⃣ Ask AI to solve and extract the equation
-    ai_response = solve_problem_and_identify_equation(request.problem)
+    # 1️⃣ Extract the equation from AI
+    equation_str = extract_equation_and_graph(request.problem)
 
-    # 2️⃣ Extract the equation from AI response
-    equation_str = ai_response.get("equation")
-
-    if not equation_str or equation_str.strip() == "":
+    if not equation_str:
         return {"error": "AI could not extract the equation from the problem."}
 
-    # 3️⃣ Generate graph data from the extracted equation
-    graph_data = generate_graph(equation_str)
+    # 2️⃣ Get AI Solution Steps
+    solution_steps = solve_problem(request.problem)
 
-    # 4️⃣ Return both the AI solution and the graph data
+    # 3️⃣ Generate Graph Data
+    graph_data = extract_equation_and_graph(equation_str)
+
+    # 4️⃣ Return JSON Response
     return {
-        "solution": ai_response["steps"],
+        "solution": solution_steps,
         "equation": equation_str,
         "graph_data": graph_data
     }
