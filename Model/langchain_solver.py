@@ -115,6 +115,7 @@ def generate_graph_data(equation):
         {{ "x": 5, "y": value }}
     ]
     Do not include any explanations or additional text - just the JSON array.
+    if graph data is not possible to form for you just give a empty array
     """
     
     try:
