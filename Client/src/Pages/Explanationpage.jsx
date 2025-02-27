@@ -202,7 +202,11 @@ export default function MathPhysicsSolver() {
               <div className="flex w-full justify-between">
                 <SpeakerSoundAnalizer isSpeaking={isSpeaking}/>
                 <Link to="/">
-                  <Core3 />
+                  <div className="flex justify-center relative items-center -translate-y-8">
+                    <div  className='bg-[#02fdff] absolute blur-[80px] h-35 w-35'></div>
+
+                    <Core3 />
+                  </div>
                 </Link>
               </div>
             </div>
