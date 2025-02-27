@@ -144,7 +144,7 @@ export default function MathPhysicsSolver() {
             <div className="space-y-6 sticky top-5">
               <div className="bg-[#012f2f] border border-[#02fdff] text-[#02fdff] p-4 rounded-lg shadow">
                 <h2 className="text-lg font-semibold">Graph Representation</h2>
-                <div className="h-88">
+                <div className="h-88 flex justify-center items-center">
                   {graphData.length > 0 ? (
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={graphData}>
@@ -156,7 +156,7 @@ export default function MathPhysicsSolver() {
                       </LineChart>
                     </ResponsiveContainer>
                   ) : (
-                    <div className="text-center text-red-400">Plotting graph is not possible</div>
+                    <div className="text-center text-red-400">Visualization cannot be generated without proper data.</div>
                   )}
                 </div>
               </div>
