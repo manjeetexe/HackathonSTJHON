@@ -11,6 +11,8 @@ export default function MathPhysicsSolver() {
   const [loading, setLoading] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [showFullSolution, setShowFullSolution] = useState(false);
+  const [speech, setSpeech] = useState(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const handleSolveProblem = async () => {
     if (!problem.trim()) {
@@ -59,6 +61,25 @@ export default function MathPhysicsSolver() {
 
   const steps = Object.entries(solution);
   const currentStep = steps[currentStepIndex] || ["", "No solution available"];
+
+
+
+  const speakStep = () => {
+    stopSpeech();
+    const utterance = new SpeechSynthesisUtterance(`${currentStep[0]}: ${currentStep[1]}`);
+    setSpeech(utterance);
+    window.speechSynthesis.speak(utterance);
+    setIsSpeaking(true);
+  };
+
+  const stopSpeech = () => {
+    if (speech) {
+      window.speechSynthesis.cancel();
+      setSpeech(null);
+      setIsSpeaking(false);
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-[#010a0a] text-white p-6 flex justify-center items-center">
@@ -131,6 +152,24 @@ export default function MathPhysicsSolver() {
                 </button>
               </div>
 
+              
+              <div className="flex justify-between mt-4">
+                {!isSpeaking ? (
+                  <button
+                    className=" w-full text-black font-bold px-4 py-2 rounded-lg bg-[#02fdff] hover:bg-[#02c7c7] transition"
+                    onClick={speakStep}
+                  >
+                    Speak
+                  </button>
+                ) : (
+                  <button
+                    className="  w-full text-black font-bold px-4 py-2 rounded-lg bg-[#02fdff] hover:bg-[#02c7c7] transition"
+                    onClick={stopSpeech}
+                  >
+                    Stop
+                  </button>
+                )}
+              </div>
               <button
                 className="mt-4 w-full text-black font-bold px-4 py-2 rounded-lg bg-[#02fdff] hover:bg-[#02c7c7] transition"
                 onClick={() => setShowFullSolution(!showFullSolution)}
@@ -161,7 +200,7 @@ export default function MathPhysicsSolver() {
                 </div>
               </div>
               <div className="flex w-full justify-between">
-                <SpeakerSoundAnalizer />
+                <SpeakerSoundAnalizer isSpeaking={isSpeaking}/>
                 <Link to="/">
                   <Core3 />
                 </Link>
