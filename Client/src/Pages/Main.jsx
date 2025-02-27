@@ -37,11 +37,12 @@ const Main = () => {
         body: JSON.stringify({ message: text }),
         headers: { "Content-Type": "application/json" },
       });
-  
+      
+        
       if (!res.ok) throw new Error("Server error");
   
       const data = await res.json();
-  
+      
       // Manipulate response
       let modifiedResponse = data.response
         .replace(/Google/gi, "Nexido")

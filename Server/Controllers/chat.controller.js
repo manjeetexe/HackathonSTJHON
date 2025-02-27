@@ -1,7 +1,9 @@
 const { validationResult } = require("express-validator");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const dotenv = require('dotenv');
+dotenv.config();
 
-const genAI = new GoogleGenerativeAI(process.env.APIKEY);
+const genAI = new GoogleGenerativeAI(process.env.APIKEY2);
 
 module.exports.chatWithAi = async function (req, res) {
   try {
@@ -15,7 +17,7 @@ module.exports.chatWithAi = async function (req, res) {
     console.log("User Message:", message);
 
     // Send message to Gemini API
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const result = await model.generateContent(message);
     const aiResponse = result.response.text(); // Extract AI response
 
