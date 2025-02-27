@@ -8,8 +8,8 @@ import SpeakerAudioAnalizer from './../Components/SpeakerSoundAnalizer'
 import Button from './../Components/Button'
 import { Link } from 'react-router-dom'
 import Vocetotext from './../Components/VoicetoText'
-let synth = window.speechSynthesis; // Global Speech API instance
-let utterance; // Store the speech instance
+let synth = window.speechSynthesis; 
+let utterance; 
 
 const Main = () => {
 
@@ -21,7 +21,7 @@ const Main = () => {
     { text: "Hello, how can I assist you?", sender: "ai" }
   ]);
 
-  // Function to send messages to the backend
+
   const sendMessage = async (text) => {
     if (!text.trim()) return;
   
@@ -47,34 +47,33 @@ const Main = () => {
         .replace(/Google/gi, "Nexido")
         .replace(/Gemini/gi, "Zenox");
   
-      // Remove "Typing..." and add AI's response
+      
       setMessages((prev) => [
         ...prev.filter((msg) => !msg.temp),
         { text: modifiedResponse, sender: "ai" },
       ]);
   
-      // Stop any ongoing speech before speaking new text
+      
       if (synth.speaking) {
         synth.cancel();
       }
   
-      // Convert text to speech
       utterance = new SpeechSynthesisUtterance(modifiedResponse);
-      utterance.lang = "en-US"; // Set language
-      utterance.rate = 1; // Speed of speech
-      utterance.pitch = 1; // Pitch of speech
+      utterance.lang = "en-US"; 
+      utterance.rate = 1;
+      utterance.pitch = 1;
 
-      utterance.onstart = () => setIsSpeaking(true);  // Show Stop button when speaking starts
+      utterance.onstart = () => setIsSpeaking(true);  
       utterance.onend = () => setIsSpeaking(false); 
   
-      synth.speak(utterance); // Speak the modified text
+      synth.speak(utterance);
   
     } catch (error) {
       console.error("Error fetching chat response:", error);
     }
   };
   
-  // Function to manually stop speech
+  
   const stopSpeech = () => {
     if (synth.speaking) {
       synth.cancel(); 
@@ -85,12 +84,12 @@ const Main = () => {
 
 
 
-  // Function to handle both text input and voice input
+  
   const addMessage = (text) => {
     if (!text.trim()) return;
   
     
-    // Now call sendMessage to get AI response
+    
     sendMessage(text);
   };
 
