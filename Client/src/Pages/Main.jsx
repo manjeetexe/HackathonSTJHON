@@ -32,7 +32,7 @@ const Main = () => {
     ]);
   
     try {
-      const res = await fetch("http://localhost:8000/api/chat", {
+      const res = await fetch("http://localhost:9000/api/chat", {
         method: "POST",
         body: JSON.stringify({ message: text }),
         headers: { "Content-Type": "application/json" },
