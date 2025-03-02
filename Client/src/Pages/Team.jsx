@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaArrowRight } from "react-icons/fa6";
 import { BiAlignLeft } from "react-icons/bi";
+import Footer from './../Components/Footer'
 
 const Team = () => {
   return (
@@ -113,7 +114,7 @@ const Team = () => {
 
             <p className='text-xl text-center w-1/2 '>Everything you need to succeed on social media, powered by cutting-edge AI technology</p>
 
-            <div className='flex mt-10 justify-center items-center  flex-wrap gap-5 px-20'>
+            <div className='flex mt-10 justify-center items-center  flex-wrap gap-5 px-10'>
                 <div className='h-70 rounded-lg w-80 bg-red-600'>
 
                 </div>
@@ -131,6 +132,7 @@ const Team = () => {
                 
             </div>
         </section>
+        <Footer />
 
     
     </>
