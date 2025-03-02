@@ -7,7 +7,7 @@ import { FaPhone } from "react-icons/fa";
 const Footer = () => {
   return (
     <div className="relative text-white py-10">
-      <div className='h-64 w-28 md:h-96 md:w-28 rounded-full bg-green-500 rotate-[80deg] md:-bottom-[5%] bottom-[10%] left-0 blur-3xl absolute'> </div>
+      <div className='h-64 w-28 md:h-96 md:w-28 rounded-full bg-blue-500 rotate-[80deg] md:-bottom-[5%] bottom-[10%] left-0 blur-3xl absolute'> </div>
       <div className="px-10 mx-auto">
         <div className='flex gap-3'>
           <img className='h-9' src='' alt="" />
@@ -50,7 +50,7 @@ const Footer = () => {
               <li><a href="#" className="hover:underline">Subscribe to our newsletter</a></li>
               <form className='flex gap-3' action="">
                 <input type="text" placeholder='Enter your Email' className='rounded-lg bg-gray-600 py-2 px-3 w-40' />
-                <button className='bg-green-400 text-black font-semibold rounded-lg px-3 py-2'>Suscribe</button>
+                <button className='bg-blue-400 text-black font-semibold rounded-lg px-3 py-2'>Suscribe</button>
               </form>
             </ul>
           </div>
