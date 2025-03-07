@@ -8,13 +8,11 @@ import SpeakerAudioAnalizer from './../Components/SpeakerSoundAnalizer'
 import Button from './../Components/Button'
 import { Link } from 'react-router-dom'
 import Vocetotext from './../Components/VoicetoText'
+
 let synth = window.speechSynthesis; 
 let utterance; 
 
 const Main = () => {
-
-
-  
 
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [messages, setMessages] = useState([
@@ -82,15 +80,10 @@ const Main = () => {
     }
   };
 
-
-
-
   
   const addMessage = (text) => {
     if (!text.trim()) return;
   
-    
-    
     sendMessage(text);
   };
 
@@ -120,7 +113,9 @@ const Main = () => {
               </div>
               <div className='flex flex-col gap-2'>
                 <div className='bg-[#02fdff] px-3 font-medium rounded-sm'>Log in</div>
-                <div className='bg-[#02fdff] px-3 font-medium rounded-sm'>Sign up</div>
+                <Link to='/Test'>
+            <Button Button='Test'/>
+        </Link>
               </div>
           </div>
 
