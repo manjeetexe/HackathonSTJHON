@@ -113,8 +113,8 @@ const Main = () => {
                 <h1 className='text-[#fffb00] absolute top-6 left-[31%] font-black text-7xl'>ZENOX</h1>
               </div>
               <div className='flex flex-col gap-2'>
-              <Link to='/Canvas'>
-                <Button Button='AI profie'  />
+              <Link to='/Profile'>
+                <Button Button='Profile'  />
               </Link>
                 <Link to='/Test'>
             <Button Button='Test'/>
