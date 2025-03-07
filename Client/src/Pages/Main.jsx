@@ -15,9 +15,6 @@ let utterance;
 
 const Main = () => {
 
-
-  
-
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [messages, setMessages] = useState([
     { text: "Hello, how can I assist you?", sender: "ai" }
@@ -84,15 +81,10 @@ const Main = () => {
     }
   };
 
-
-
-
   
   const addMessage = (text) => {
     if (!text.trim()) return;
   
-    
-    
     sendMessage(text);
   };
 
@@ -125,6 +117,10 @@ const Main = () => {
                 <Button Button='AI profie'  />
               </Link>
                 <div className='bg-[#02fdff] px-3 font-medium rounded-sm'>Sign up</div>
+                <div className='bg-[#02fdff] px-3 font-medium rounded-sm'>Log in</div>
+                <Link to='/Test'>
+            <Button Button='Test'/>
+        </Link>
               </div>
           </div>
 

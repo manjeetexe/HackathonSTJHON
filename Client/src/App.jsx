@@ -5,6 +5,7 @@ import Canvas from './Pages/Canvas'
 import Explanationpage from './Pages/Explanationpage';
 import Team from './Pages/Team'
 import Profile from './Pages/Profile'
+import Test from './Pages/Test'
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
             <Route path="/Explain" element={<Explanationpage />} />
             <Route path="/team" element={<Team />} />
             <Route path="/Profile" element={<Profile />} />
+            <Route path="/Test" element={<Test />} />
           </Routes>
         </Router>
     </>
