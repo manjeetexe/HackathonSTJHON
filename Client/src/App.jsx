@@ -4,6 +4,7 @@ import Main from './Pages/Main'
 import Canvas from './Pages/Canvas'
 import Explanationpage from './Pages/Explanationpage';
 import Team from './Pages/Team'
+import Profile from './Pages/Profile'
 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
             <Route path="/Canvas" element={<Canvas />} />
             <Route path="/Explain" element={<Explanationpage />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/Profile" element={<Profile />} />
           </Routes>
         </Router>
     </>
