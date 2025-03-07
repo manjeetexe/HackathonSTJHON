@@ -116,8 +116,6 @@ const Main = () => {
               <Link to='/Canvas'>
                 <Button Button='AI profie'  />
               </Link>
-                <div className='bg-[#02fdff] px-3 font-medium rounded-sm'>Sign up</div>
-                <div className='bg-[#02fdff] px-3 font-medium rounded-sm'>Log in</div>
                 <Link to='/Test'>
             <Button Button='Test'/>
         </Link>
